@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CollectableCoin : MonoBehaviour
 {
+    // Audio clip for coin collection
     [SerializeField] private AudioClip coinCollectClip;
     [SerializeField] private float rotationSpeed = 100f;
     [SerializeField] private float coinValue = 1f;
@@ -20,6 +21,7 @@ public class CollectableCoin : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
+        // Check for player collision
         if (collision.CompareTag("Player") && !isCollected)
         {
             CollectCoin();
@@ -28,6 +30,7 @@ public class CollectableCoin : MonoBehaviour
 
     void CollectCoin()
     {
+        // Mark as collected to prevent multiple triggers
         isCollected = true;
 
         // Play collection sound

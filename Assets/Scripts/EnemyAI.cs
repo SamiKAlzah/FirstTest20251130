@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        // Auto-find player if not assigned
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -35,6 +35,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (player != null)
         {
+          
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
             // Check if player is in detection range
@@ -57,24 +58,27 @@ public class EnemyAI : MonoBehaviour
 
     void Patrol()
     {
+        // If not chasing, move between patrol points
         if (currentPatrolTarget == null)
         {
             return;
         }
-
+        // Calculate distance to current patrol target
         float distanceToTarget = Vector3.Distance(transform.position, currentPatrolTarget.position);
 
         // If reached patrol point, wait and switch target
         if (distanceToTarget < 1f)
         {
+            // Wait at patrol point
             patrolWaitCounter += Time.deltaTime;
-
+            // After waiting, switch to the other patrol point
             if (patrolWaitCounter >= patrolWaitTime)
             {
                 SwitchPatrolTarget();
                 patrolWaitCounter = 0f;
             }
         }
+        // Move towards current patrol target
         else
         {
             navMeshAgent.SetDestination(currentPatrolTarget.position);

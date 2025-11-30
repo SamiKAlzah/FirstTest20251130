@@ -47,25 +47,26 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
+        // Get input axes
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
         Vector3 inputDir = new Vector3(h, 0, v).normalized;
-
+        // Only move if there's input
         if (inputDir.magnitude >= 0.1f)
         {
             // Make movement relative to camera
             Vector3 camForward = cameraTransform.forward;
             Vector3 camRight = cameraTransform.right;
-
+            // Project onto horizontal plane
             camForward.y = 0;
             camRight.y = 0;
-
+            // Normalize
             camForward.Normalize();
             camRight.Normalize();
-
+            // Calculate move direction
             Vector3 moveDir = (camForward * v + camRight * h).normalized;
-
+            // Move player
             rb.MovePosition(rb.position + moveDir * moveSpeed * Time.deltaTime);
 
             // Rotate player toward direction
@@ -75,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleJump()
     {
+        // Jump if grounded
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);

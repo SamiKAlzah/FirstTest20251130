@@ -19,7 +19,7 @@ public class ResetPoint : MonoBehaviour
             playerSpawnPoint = transform;
         }
     }
-
+    // Trigger reset on player collision
     void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Player"))

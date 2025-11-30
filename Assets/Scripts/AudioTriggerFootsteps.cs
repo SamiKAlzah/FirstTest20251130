@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class AudioTriggerFootsteps : MonoBehaviour
 {
+    // Audio clips
     [Header("Audio Clips")]
     [SerializeField] private AudioClip footstepClip;
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip impactClip;
     [SerializeField] private AudioClip backgroundMusicClip;
-
+    // Audio settings
     [Header("Audio Settings")]
     [SerializeField] private float footstepVolume = 0.3f;
     [SerializeField] private float jumpVolume = 0.5f;
     [SerializeField] private float impactVolume = 0.6f;
     [SerializeField] private float musicVolume = 0.4f;
     [SerializeField] private float footstepCooldown = 0.4f;
-
+    // Components
     private AudioSource audioSource;
     private AudioSource musicSource;
     private PlayerMovement playerMovement;
@@ -48,6 +49,7 @@ public class AudioTriggerFootsteps : MonoBehaviour
 
     void Update()
     {
+        // Continue playing background music if stopped
         HandleFootsteps();
         HandleJump();
         lastVelocity = rb.linearVelocity;
@@ -67,7 +69,7 @@ public class AudioTriggerFootsteps : MonoBehaviour
         // Check if player is moving on ground
         bool isMoving = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude > 0.5f;
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f, LayerMask.GetMask("Default"));
-
+        // Play footstep sound if moving and grounded
         if (isMoving && isGrounded && footstepTimer <= 0)
         {
             PlayFootstepSound();
@@ -83,7 +85,7 @@ public class AudioTriggerFootsteps : MonoBehaviour
             PlayJumpSound();
         }
     }
-
+    // Audio playback methods
     void PlayFootstepSound()
     {
         if (footstepClip != null)
@@ -91,7 +93,7 @@ public class AudioTriggerFootsteps : MonoBehaviour
             audioSource.PlayOneShot(footstepClip, footstepVolume);
         }
     }
-
+   
     void PlayJumpSound()
     {
         if (jumpClip != null)
