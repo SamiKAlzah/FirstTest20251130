@@ -17,7 +17,6 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        // Initialize NavMeshAgent
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         if (player == null)

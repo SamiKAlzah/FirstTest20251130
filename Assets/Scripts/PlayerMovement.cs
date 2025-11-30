@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 7f;
     public Transform cameraTransform;
     public LayerMask groundMask;
-    
+
     private Rigidbody rb;
     private bool isGrounded;
     private int currentJumps = 0;
@@ -16,6 +16,12 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        // Auto-find camera if not assigned
+        if (cameraTransform == null)
+        {
+            cameraTransform = Camera.main.transform;
+        }
     }
 
     void Update()
